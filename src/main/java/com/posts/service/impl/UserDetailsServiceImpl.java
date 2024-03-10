@@ -1,11 +1,10 @@
 package com.posts.service.impl;
 
-import com.posts.model.Users;
-import com.posts.repository.UserRepository;
+import com.posts.data.entities.UserEntity;
+import com.posts.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,17 +20,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = repository.findByUsername(username);
+        UserEntity userEntity = repository.findByUsername(username);
 
         System.out.println("....Finding user by name: " + username);
-        System.out.println("....Loading user:" + user);
+        System.out.println("....Loading user:" + userEntity);
 
-        if (user == null) {
+        if (userEntity == null) {
             throw new UsernameNotFoundException("User not found");
         }
 
         List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("admin"));
 
-        return new User(user.getUsername(), user.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(userEntity.getUsername(), userEntity.getPassword(), authorities);
     }
 }

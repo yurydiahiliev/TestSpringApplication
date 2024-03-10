@@ -1,13 +1,13 @@
 package com.posts.service;
 
-import com.posts.model.Post;
+import com.posts.model.PostDto;
 
 import java.util.*;
 
 public interface PostService {
-    List<Post> getAllPosts();
-    Post createPost(Post post);
-    Post updatePost(Post post);
+    List<PostDto> getAllPosts();
+    PostDto createPost(PostDto postEntity);
+    PostDto updatePost(Long id, PostDto postEntity);
     void deletePost(Long postId);
-    Post getPostById(Long postId);
+    PostDto getPostById(Long postId);
 }

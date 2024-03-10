@@ -1,7 +1,7 @@
 package com.posts.components;
 
-import com.posts.model.Users;
-import com.posts.repository.UserRepository;
+import com.posts.model.UserDto;
+import com.posts.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,16 +11,19 @@ import org.springframework.stereotype.Component;
 public class UsersInitializer implements CommandLineRunner {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
-        if (!userRepository.existsByUsername("admin")) {
-            Users adminUser = new Users("admin", passwordEncoder.encode("admin"));
-            userRepository.save(adminUser);
+        if (!userService.existsByUsername("admin")) {
+            UserDto adminUserEntity = UserDto.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("admin"))
+                .build();
+            userService.add(adminUserEntity);
             System.out.println("<======= Init default admin user ========>");
         }
     }

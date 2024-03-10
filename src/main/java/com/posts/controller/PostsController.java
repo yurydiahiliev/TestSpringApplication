@@ -1,9 +1,11 @@
 package com.posts.controller;
 
-import com.posts.model.Post;
+import com.posts.model.PostDto;
 import com.posts.service.PostService;
+import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -16,20 +18,19 @@ public class PostsController {
     private PostService postService;
 
     @GetMapping
-    public List<Post> getAllPosts() {
+    public @Nonnull List<PostDto> getAllPosts() {
         return postService.getAllPosts();
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Post createPost(@RequestBody Post post) {
-        return postService.createPost(post);
+    public PostDto createPost(@RequestBody PostDto postEntity) {
+        return postService.createPost(postEntity);
     }
 
     @PutMapping("/{postId}")
-    public Post updatePost(@PathVariable Long postId, @RequestBody Post post) {
-        post.setId(postId);
-        return postService.updatePost(post);
+    public PostDto updatePost(@PathVariable Long postId, @RequestBody PostDto postDto) {
+        return postService.updatePost(postId, postDto);
     }
 
     @DeleteMapping("/{postId}")
@@ -38,8 +39,9 @@ public class PostsController {
         postService.deletePost(postId);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/{postId}")
-    public Post getPostById(@PathVariable Long postId) {
+    public @Nonnull PostDto getPostById(@PathVariable Long postId) {
         return postService.getPostById(postId);
     }
 }
