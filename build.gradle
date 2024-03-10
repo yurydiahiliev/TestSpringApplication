@@ -2,7 +2,14 @@ plugins {
     id 'org.springframework.boot' version '3.2.3'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'io.freefair.lombok' version '8.6'
+    id 'com.google.cloud.tools.jib' version '3.4.1'
     id 'java'
+}
+
+ext {
+    dockerImage = System.getProperty("os.arch") == "arm64" ? "arm64v8/eclipse-temurin:19-jre" : "eclipse-temurin:19-jre"
+    dockerArch = System.getProperty("os.arch") == "arm64" ? "arm64" : "amd64"
+    registry = 'yudyagilev'
 }
 
 group = 'com.example'
@@ -19,10 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.postgresql:postgresql'
-//    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-//    implementation 'io.springfox:springfox-swagger2:3.0.0'
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
-//    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -35,6 +39,27 @@ bootRun {
 tasks.jar {
     manifest {
         attributes["Main-Class"] = "com.posts.TestApplication"
+    }
+}
+
+jib {
+    container {
+        ports = ['8080']
+        jvmFlags = ["-Dspring.profiles.active=docker"]
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
+    from {
+        image = "${project.ext.dockerImage}"
+        platforms {
+            platform {
+                architecture = "${project.ext.dockerArch}"
+                os = 'linux'
+            }
+        }
+    }
+    to {
+        image = "${project.ext.registry}/${project.name}"
+        tags = ['latest', "${project.version}"]
     }
 }
 
