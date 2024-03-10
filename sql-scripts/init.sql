@@ -11,5 +11,3 @@ CREATE TABLE posts (
     content TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-INSERT INTO users (username, password) VALUES ('admin', 'admin');

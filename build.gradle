@@ -27,8 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.postgresql:postgresql'
     implementation 'javax.servlet:javax.servlet-api:4.0.1'
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
-
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -44,8 +43,8 @@ tasks.jar {
 
 jib {
     container {
-        ports = ['8080']
-        jvmFlags = ["-Dspring.profiles.active=docker"]
+        ports = ['8080', '5432', '80']
+//        jvmFlags = ["-Dspring.profiles.active=docker"]
         creationTime = 'USE_CURRENT_TIMESTAMP'
     }
     from {
