@@ -2,21 +2,49 @@ server:
   port: 8080
 
 spring:
+  main:
+    web-application-type: reactive
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: r2dbc:postgresql://localhost:5432/postgres
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+#
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
+#
+#  jpa:
+#    show-sql: false
+#    hibernate:
+#      ddl-auto: create-drop
+#      naming:
+#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+#    properties:
+#      hibernate.format_sql: true
 
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+  r2dbc:
+    url: r2dbc:pool:postgres://localhost:5432/postgres
+    username: admin
+    password: admin
+    init:
+      mode: always
+  flyway:
+    url: jdbc:postgresql://localhost:5432/postgres
+    locations: classpath:db/migration
+    user: admin
+    password: admin
+    baseline-on-migrate: true
 
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: create-drop
-      naming:
-        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-    properties:
-      hibernate.format_sql: true
+jwt:
+  password:
+    encoder:
+      secret: FZK2DZ82odqS13e8aENggaMbb_fAkl-nJL4AEVBX43g
+      iteration: 64
+      keylength: 256
+  secret: b5f59337a612a2a7dc07328f3e7d1a04722967c7f06df20a499a7d3f91ff2a7e
+  expiration: 3600
+  issuer: proselyte
+
+

@@ -1,14 +1,18 @@
 package com.posts.service;
 
-import com.posts.model.UserDto;
+import com.posts.data.entities.UserEntity;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.*;
 
+@Service
 public interface UserService {
-    UserDto findByUsername(String username);
-    UserDto findUserById(Long id);
-    List<UserDto> findAllUsers();
-    UserDto add(UserDto userDto);
+    Mono<UserEntity> findByUsername(String username);
+
+    Mono<UserEntity> findByUserId(Long id);
+    Mono<List<UserEntity>> findAllUsers();
+    Mono<UserEntity> registerUser(UserEntity userDto);
     boolean existsByUsername(String username);
 }
 

@@ -1,44 +1,63 @@
 package com.posts.service.impl;
 
 import com.posts.data.entities.UserEntity;
+import com.posts.data.entities.UserRole;
 import com.posts.data.repository.UserRepository;
-import com.posts.exeptions.NotFoundException;
-import com.posts.model.UserDto;
+import com.posts.exceptions.ApiException;
 import com.posts.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Override
-    public UserDto findByUsername(String username) {
-        UserEntity userEntity = userRepository.findByUsername(username);
-        return UserDto.fromEntity(userEntity);
+    private final PasswordEncoder passwordEncoder;
+
+    public Mono<UserEntity> registerUser(UserEntity user) {
+         if (!userRepository.existsByUsername(user.getUsername())) {
+             return createNewUser(user);
+         } else {
+             throw new ApiException("User is already exists!", "400");
+         }
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public UserDto findUserById(Long id) {
-        return UserDto.fromEntity(
-            userRepository.findById(id).orElseThrow(() -> new NotFoundException("Can not find user by id: " + id)));
+    private Mono<UserEntity> createNewUser(UserEntity user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(UserRole.USER);
+        user.setEnabled(true);
+        user.setCreated_at(LocalDateTime.now());
+        user.setUpdated_at(LocalDateTime.now());
+
+        return userRepository.save(user).doOnSuccess(u -> {
+            log.info("IN registerUser - user: {} created", u);
+        });
     }
 
     @Override
-    public List<UserDto> findAllUsers() {
-        return userRepository.findAll().stream().map(UserDto::fromEntity).toList();
+    public Mono<UserEntity> findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
-    @Transactional
+
     @Override
-    public UserDto add(UserDto userDto) {
-        return UserDto.fromEntity(userRepository.save(userDto.toEntity()));
+    public Mono<UserEntity> findByUserId(Long id) {
+        return userRepository.findById(id)
+                             .switchIfEmpty(Mono.error(new RuntimeException("Can not find user by id: " + id)));
+    }
+
+    @Override
+    public Mono<List<UserEntity>> findAllUsers() {
+        return userRepository.findAll().collectList();
     }
 
     @Override

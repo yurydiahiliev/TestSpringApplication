@@ -5,20 +5,17 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
-@Getter
-@Setter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
+@Builder(toBuilder = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "users")
-public class UserEntity implements Serializable {
+@Table(name = "user_entity")
+public class UserEntity {
 
-    @Id
+    @org.springframework.data.annotation.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
@@ -27,6 +24,18 @@ public class UserEntity implements Serializable {
 
     @Column(nullable = false, unique = true)
     String password;
+
+    UserRole role;
+    String first_name;
+    String last_name;
+    boolean enabled;
+    LocalDateTime created_at;
+    LocalDateTime updated_at;
+
+    @ToString.Include(name = "password")
+    private String maskPassword() {
+        return "********";
+    }
 
     @Override
     public final boolean equals(Object o) {

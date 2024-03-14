@@ -2,59 +2,48 @@ package com.posts.service.impl;
 
 import com.posts.data.entities.PostEntity;
 import com.posts.data.repository.PostRepository;
-import com.posts.model.PostDto;
 import com.posts.service.PostService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.*;
-
+@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostRepository postRepository;
 
-    @Transactional(readOnly = true)
     @Override
-    public List<PostDto> getAllPosts() {
-        return postRepository
-            .findAll()
-            .stream()
-            .map(PostDto::fromEntity)
-            .toList();
+    public Flux<PostEntity> getAllPosts() {
+        return postRepository.findAll();
     }
 
-    @Transactional
     @Override
-    public PostDto createPost(PostDto postDto) {
-        PostEntity entity = postDto.toEntity();
-        return PostDto.fromEntity(postRepository.save(entity));
+    public Mono<PostEntity> createPost(PostEntity postEntity) {
+        return postRepository.save(postEntity);
     }
 
-    @Transactional
     @Override
-    public PostDto updatePost(Long id, PostDto postDto) {
-        PostEntity entity = postDto.toEntity();
-
-        if (postRepository.existsById(id)) {
-            return PostDto.fromEntity(postRepository.save(entity));
-        } else {
-            throw new IllegalArgumentException("Post with id " + entity.getId() + " does not exist.");
-        }
+    public Mono<PostEntity> updatePost(Long id, PostEntity postDto) {
+        return postRepository.findById(id)
+                             .flatMap(existingPost -> {
+                                 existingPost.setTitle(postDto.getTitle());
+                                 existingPost.setContent(postDto.getContent());
+                                 return postRepository.save(existingPost);
+                             });
     }
 
-    @Transactional
     @Override
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
     }
-
-    @Transactional(readOnly = true)
+    
     @Override
-    public PostDto getPostById(Long postId) {
-        return PostDto.fromEntity(postRepository.findById(postId)
-                             .orElseThrow(() -> new IllegalArgumentException("Post with id " + postId + " does not exist.")));
+    public Mono<PostEntity> getPostById(Long postId) {
+        return postRepository.findById(postId)
+                             .switchIfEmpty(Mono.error(new IllegalArgumentException("Post with id " + postId + " does not exist.")));
     }
 }

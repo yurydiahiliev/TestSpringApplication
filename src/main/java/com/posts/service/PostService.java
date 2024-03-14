@@ -1,13 +1,15 @@
 package com.posts.service;
 
-import com.posts.model.PostDto;
+import com.posts.data.entities.PostEntity;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.*;
-
+@Service
 public interface PostService {
-    List<PostDto> getAllPosts();
-    PostDto createPost(PostDto postEntity);
-    PostDto updatePost(Long id, PostDto postEntity);
+    Flux<PostEntity> getAllPosts();
+    Mono<PostEntity> createPost(PostEntity postEntity);
+    Mono<PostEntity> updatePost(Long id, PostEntity postEntity);
     void deletePost(Long postId);
-    PostDto getPostById(Long postId);
+    Mono<PostEntity> getPostById(Long postId);
 }
