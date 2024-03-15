@@ -1,4 +1,4 @@
-CREATE TABLE user_entity (
+CREATE TABLE users (
     id         SERIAL PRIMARY KEY,
     username   VARCHAR(64)   NOT NULL UNIQUE,
     password   VARCHAR(2048) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE user_entity (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE post_entity (
+CREATE TABLE posts (
     id         SERIAL PRIMARY KEY,
     title      VARCHAR(64)   NOT NULL,
     content    VARCHAR(64)   NOT NULL

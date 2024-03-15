@@ -13,6 +13,6 @@ public interface UserService {
     Mono<UserEntity> findByUserId(Long id);
     Mono<List<UserEntity>> findAllUsers();
     Mono<UserEntity> registerUser(UserEntity userDto);
-    boolean existsByUsername(String username);
+    Mono<Boolean> existsByUsername(String username);
 }
 

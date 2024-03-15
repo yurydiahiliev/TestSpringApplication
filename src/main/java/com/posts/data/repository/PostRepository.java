@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostRepository extends R2dbcRepository<PostEntity, Long> {
-
 }
-

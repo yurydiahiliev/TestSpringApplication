@@ -3,13 +3,11 @@ package com.posts.service.impl;
 import com.posts.data.entities.PostEntity;
 import com.posts.data.repository.PostRepository;
 import com.posts.service.PostService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 

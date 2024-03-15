@@ -10,19 +10,20 @@ spring:
     password: admin
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
-#
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ant_path_matcher
-#
-#  jpa:
-#    show-sql: false
-#    hibernate:
-#      ddl-auto: create-drop
-#      naming:
-#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-#    properties:
-#      hibernate.format_sql: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    properties:
+      hibernate.format_sql: true
 
   r2dbc:
     url: r2dbc:pool:postgres://localhost:5432/postgres

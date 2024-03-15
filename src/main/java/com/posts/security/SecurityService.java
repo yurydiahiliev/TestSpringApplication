@@ -67,11 +67,11 @@ public class SecurityService {
         return userService.findByUsername(username)
                           .flatMap(user -> {
                               if (!user.isEnabled()) {
-                                  return Mono.error(new AuthException("Account disabled", "USER_ACCOUNT_DISABLED"));
+                                  return Mono.error(new AuthException("Account disabled!"));
                               }
 
                               if (!passwordEncoder.matches(password, user.getPassword())) {
-                                  return Mono.error(new AuthException("Invalid password", "INVALID_PASSWORD"));
+                                  return Mono.error(new AuthException("Invalid password!"));
                               }
 
                               return Mono.just(generateToken(user).toBuilder()
@@ -79,6 +79,6 @@ public class SecurityService {
                                                                   .build());
                           })
                           .switchIfEmpty(
-                              Mono.error(new AuthException("Invalid username", "INVALID_USERNAME")));
+                              Mono.error(new AuthException("Invalid user data!")));
     }
 }
