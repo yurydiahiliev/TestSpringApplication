@@ -5,7 +5,7 @@ import '../css/HomePage.css'
 function HomePage() {
     return (
         <div className="container">
-          <h2>Welcome to My App</h2>
+          <h2>Welcome to Posts App</h2>
           <p>Please select an option:</p>
           <ul>
             <li><Link to="/login" className="link-btn">Login</Link></li>
