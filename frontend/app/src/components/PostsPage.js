@@ -1,4 +1,3 @@
-// PostsPage.js
 import React, { useState, useEffect } from 'react';
 import '../css/PostsPage.css'
 import axios from 'axios';
