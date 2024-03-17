@@ -14,7 +14,15 @@ public class BearerTokenServerAuthenticationConverter implements ServerAuthentic
 
     private final JwtHandler jwtHandler;
     private static final String BEARER_PREFIX = "Bearer ";
-    private static final Function<String, Mono<String>> getBearerValue = authValue -> Mono.justOrEmpty(authValue.substring(BEARER_PREFIX.length()));
+    private static final Function<String, Mono<String>> getBearerValue = authValue -> {
+        if (authValue == null || authValue.isEmpty()) {
+            return Mono.error(new IllegalArgumentException("Authorization token is empty"));
+        }
+        if (!authValue.startsWith(BEARER_PREFIX)) {
+            return Mono.error(new IllegalArgumentException("Invalid authorization token format"));
+        }
+        return Mono.just(authValue.substring(BEARER_PREFIX.length()));
+    };
 
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
