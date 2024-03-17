@@ -37,27 +37,23 @@ function LoginPage() {
     }
   };
 
-  const handleLogout = () => {
-    setToken(''); // Clear token
-    toast.success('Logged out successfully');
-  };
-
   return (
     <div className="container">
       <h2>Login</h2>
       <div className="input-group">
         <label htmlFor="username">Username</label>
         <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <span></span>
       </div>
       <div className="input-group">
         <label htmlFor="password">Password</label>
         <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <span></span>
       </div>
       <button className="btn" onClick={handleLogin} disabled={loading}>
         {loading ? 'Logging in...' : 'Login'}
       </button>
       <ToastContainer />
-      <button onClick={handleLogout}>Logout</button> {/* Logout button */}
     </div>
   );
 }
