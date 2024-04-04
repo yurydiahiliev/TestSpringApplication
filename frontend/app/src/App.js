@@ -4,7 +4,6 @@ import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { TokenProvider } from './TokenContext';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import HomePage from './components/HomePage';
@@ -12,7 +11,6 @@ import PostsPage from './components/PostsPage';
 
 const App = () => {
   return (
-    <TokenProvider>
       <Router>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
@@ -22,7 +20,6 @@ const App = () => {
         </Routes>
         <ToastContainer />
       </Router>
-    </TokenProvider>
   );
 };
 

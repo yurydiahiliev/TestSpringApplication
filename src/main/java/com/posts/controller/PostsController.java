@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 import java.util.*;
 
 @RestController
-@RequestMapping(value = "/api/posts", consumes = "application/json")
+@RequestMapping(value = "/api/posts", produces = "application/json")
 public class PostsController {
 
     @Autowired

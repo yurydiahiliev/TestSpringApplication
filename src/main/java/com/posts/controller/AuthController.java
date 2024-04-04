@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/auth", consumes = "application/json")
+@RequestMapping(value = "/api/auth", produces = "application/json")
 public class AuthController {
 
     private final SecurityService securityService;

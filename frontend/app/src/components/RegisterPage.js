@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../css/RegisterPage.css'
+import '../css/RegisterPage.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,11 +13,20 @@ function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const handleInputChange = (setValue) => (e) => {
+    setValue(e.target.value);
+  };
+
   const handleRegister = (e) => {
     e.preventDefault();
     setLoading(true);
     axios
-      .post('/api/auth/register', { username, password, first_name, last_name })
+      .post('/api/auth/register', { username, password, first_name, last_name }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }
+      })
       .then(() => {
         setLoading(false);
         toast.success('User created successfully!');
@@ -34,21 +43,23 @@ function RegisterPage() {
     <div className="container">
       <h2>Sign in a new user</h2>
       <div className="input-group">
-        <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <label htmlFor="username" style={{ display: username ? 'none' : 'block' }}>Username</label>
+        <input type="text" id="username" value={username} onChange={handleInputChange(setUsername)} />
       </div>
       <div className="input-group">
-        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <label htmlFor="password" style={{ display: password ? 'none' : 'block' }}>Password</label>
+        <input type="password" id="password" value={password} onChange={handleInputChange(setPassword)} />
       </div>
       <div className="input-group">
-        <label htmlFor="first_name">First Name</label>
-        <input type="text" id="first_name" value={first_name} onChange={(e) => setFirstName(e.target.value)} />
+        <label htmlFor="first_name" style={{ display: first_name ? 'none' : 'block' }}>First Name</label>
+        <input type="text" id="first_name" value={first_name} onChange={handleInputChange(setFirstName)} />
       </div>
       <div className="input-group">
-        <label htmlFor="last_name">Last Name</label>
-        <input type="text" id="last_name" value={last_name} onChange={(e) => setLastName(e.target.value)} />
+        <label htmlFor="last_name" style={{ display: last_name ? 'none' : 'block' }}>Last Name</label>
+        <input type="text" id="last_name" value={last_name} onChange={handleInputChange(setLastName)} />
       </div>
       <button className="btn" onClick={handleRegister} disabled={loading}>
-      {loading ? 'Registering...' : 'Register'}
+        {loading ? 'Registering...' : 'Register'}
       </button>
       <ToastContainer />
     </div>
