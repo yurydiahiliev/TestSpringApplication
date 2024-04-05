@@ -46,19 +46,19 @@ function LoginPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container-login">
       <h2>Login</h2>
-      <div className="input-group">
+      <div className="input-group-login">
         <label htmlFor="username" style={{ display: username ? 'none' : 'block' }}>Username</label>
         <input type="text" id="username" value={username} onChange={handleInputChange(setUsername)} />
         <span></span>
       </div>
-      <div className="input-group">
+      <div className="input-group-login">
         <label htmlFor="password" style={{ display: password ? 'none' : 'block' }}>Password</label>
         <input type="password" id="password" value={password} onChange={handleInputChange(setPassword)} />
         <span></span>
       </div>
-      <button className="btn" onClick={handleLogin} disabled={loading}>
+      <button className="btn-login" onClick={handleLogin} disabled={loading}>
         {loading ? 'Logging in...' : 'Login'}
       </button>
       <ToastContainer />

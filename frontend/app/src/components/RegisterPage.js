@@ -40,25 +40,25 @@ function RegisterPage() {
   };
 
   return (
-    <div className="container">
-      <h2>Sign in a new user</h2>
-      <div className="input-group">
-        <label htmlFor="username" style={{ display: username ? 'none' : 'block' }}>Username</label>
+    <div className="container-register">
+      <h2 className="h2-register">Sign up a new user</h2>
+      <div className="input-group-register">
+        <label htmlFor="username">Username</label>
         <input type="text" id="username" value={username} onChange={handleInputChange(setUsername)} />
       </div>
-      <div className="input-group">
-        <label htmlFor="password" style={{ display: password ? 'none' : 'block' }}>Password</label>
+      <div className="input-group-register">
+        <label htmlFor="password">Password</label>
         <input type="password" id="password" value={password} onChange={handleInputChange(setPassword)} />
       </div>
-      <div className="input-group">
-        <label htmlFor="first_name" style={{ display: first_name ? 'none' : 'block' }}>First Name</label>
+      <div className="input-group-register">
+        <label htmlFor="first_name">First Name</label>
         <input type="text" id="first_name" value={first_name} onChange={handleInputChange(setFirstName)} />
       </div>
-      <div className="input-group">
-        <label htmlFor="last_name" style={{ display: last_name ? 'none' : 'block' }}>Last Name</label>
+      <div className="input-group-register">
+        <label htmlFor="last_name">Last Name</label>
         <input type="text" id="last_name" value={last_name} onChange={handleInputChange(setLastName)} />
       </div>
-      <button className="btn" onClick={handleRegister} disabled={loading}>
+      <button className="btn-register" onClick={handleRegister} disabled={loading}>
         {loading ? 'Registering...' : 'Register'}
       </button>
       <ToastContainer />

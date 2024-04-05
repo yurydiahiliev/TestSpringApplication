@@ -1,6 +1,7 @@
 /* HomePage.css */
 .container {
-    max-width: 1000px;
+    width: 100%;
+    max-width: 600px;
     margin: 100px auto;
     padding: 20px;
     text-align: center;

@@ -1,42 +1,51 @@
 /* RegisterPage.css */
-.container {
-  max-width: 400px;
-  margin: 100px auto;
+.container-register {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background: white;
+  border-radius: 10px;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
 }
 
-.input-group {
+.h2-register {
+  text-align: center;
+}
+
+.input-group-register {
   margin-bottom: 20px;
 }
 
-.input-group label {
+.input-group-register label {
   display: block;
   margin-bottom: 5px;
-  font-weight: bold; /* Added font weight for label */
+  font-size: 15px;
+  color: #adadad;
 }
 
-.input-group input {
+.input-group-register input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-sizing: border-box; /* Ensure input width includes padding and border */
+  box-sizing: border-box;
 }
 
-.btn {
-  width: 100%;
+.btn-register {
+  width: 20%;
   padding: 10px;
   border: none;
   border-radius: 5px;
   background-color: #28a745;
   color: #fff;
-  font-weight: bold; /* Added font weight for button text */
   cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  font-size: 15px;
 }
 
-.btn:hover {
+.btn-register:hover {
   background-color: #218838;
 }

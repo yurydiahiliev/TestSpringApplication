@@ -6,52 +6,65 @@
   background: linear-gradient(120deg, #095279, #00d4ff);
   height: 100vh;
   overflow: hidden;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.container {
+.container-login {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
+  width: 500px;
   background: white;
   border-radius: 10px;
   padding: 20px;
 }
 
-.container h2 {
+.container-login h2 {
   text-align: center;
   margin-bottom: 20px; /* Adjusted margin */
   border-bottom: 1px solid #adadad;
   padding-bottom: 10px; /* Adjusted padding */
 }
 
-.input-group {
+.input-group-login {
   position: relative;
-  margin: 20px 0; /* Adjusted margin */
+  margin: 20px 0; 
 }
 
-.input-group label {
+.input-group-login label {
   position: absolute;
-  top: 10px; /* Adjusted position */
+  top: 10px; 
   left: 10px;
   color: #adadad;
   font-size: 14px;
-  transition: .3s; /* Adjusted transition */
+  transition: .3s;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.input-group input {
+.input-group-login input {
   width: 100%;
-  padding: 10px; /* Adjusted padding */
+  padding: 10px;
   font-size: 16px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.btn {
-  width: 100%;
+.btn-login {
+  width: 20%;
   padding: 10px;
   border: none;
   border-radius: 5px;
   background-color: #28a745;
   color: #fff;
   cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  font-size: 15px;
+}
+
+.btn-login:hover {
+  background-color: #218838;
 }

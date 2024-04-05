@@ -58,23 +58,3 @@ button:hover {
 .post-item p {
   color: #666;
 }
-
-input[type="text"],
-textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-textarea {
-  resize: vertical;
-}
-
-@media (max-height: 400px) {
-  .container {
-    overflow-y: auto; 
-  }
-}
