@@ -1,4 +1,3 @@
-# Use a base image with OpenJDK 11 installed
 FROM eclipse-temurin:17-jdk-jammy AS build
 
 WORKDIR /app

@@ -27,19 +27,28 @@ services:
       - "5050:80"
     restart: unless-stopped
 
-#  api.spring.app:
-#    container_name: api.spring.app
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    ports:
-#      - "8080:8080"
-#    restart: always
-#    depends_on:
-#      - postgres_db
-#    environment:
-#      - SERVER_PORT=8080
-#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db/postgres
+  api.posts.app:
+    container_name: api.posts.app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - postgres_db
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db/postgres
+
+  react_app:
+    container_name: react_app
+    build:
+      context: .
+      dockerfile: frontend/app/Dockerfile
+    ports:
+      - "3000:3000"
+    restart: always
 
 volumes:
   postgres_db:
