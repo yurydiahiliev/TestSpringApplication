@@ -59,6 +59,7 @@ tasks.jar {
 jib {
     container {
         ports = ['8080', '5432', '80']
+        jvmFlags = ['-Xms512m', '-Xdebug']
 //        jvmFlags = ["-Dspring.profiles.active=docker"]
         creationTime = 'USE_CURRENT_TIMESTAMP'
     }

@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   postgres_db:
-    container_name: postgres_container
+    container_name: postgres_db
     image: postgres:16.0
     environment:
       POSTGRES_DB: postgres
@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   pgadmin:
-    container_name: pgadmin_container
+    container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
@@ -27,8 +27,8 @@ services:
       - "5050:80"
     restart: unless-stopped
 
-  api.posts.app:
-    container_name: api.posts.app
+  springtestapp:
+    container_name: springtestapp
     build:
       context: .
       dockerfile: Dockerfile
@@ -37,9 +37,12 @@ services:
     restart: always
     depends_on:
       - postgres_db
+      - pgadmin
+    links:
+      - postgres_db
     environment:
       - SERVER_PORT=8080
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db:5432/postgres
 
   react_app:
     container_name: react_app
@@ -48,6 +51,8 @@ services:
       dockerfile: frontend/app/Dockerfile
     ports:
       - "3000:3000"
+    links:
+      - springtestapp
     restart: always
 
 volumes:
