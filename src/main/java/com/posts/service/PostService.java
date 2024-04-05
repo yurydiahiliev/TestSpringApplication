@@ -10,6 +10,7 @@ public interface PostService {
     Flux<PostEntity> getAllPosts();
     Mono<PostEntity> createPost(PostEntity postEntity);
     Mono<PostEntity> updatePost(Long id, PostEntity postEntity);
-    void deletePost(Long postId);
+    Mono<Void> deletePost(Long postId);
+    Mono<Void> deleteAllPosts();
     Mono<PostEntity> getPostById(Long postId);
 }
