@@ -1,7 +1,7 @@
 FROM node:20.11.0 as build
 WORKDIR /app
 COPY frontend/app/package*.json ./
-RUN npm install
+RUN npm install && npm cache clean --force
 COPY frontend/app .
 RUN npm run build
 EXPOSE 3000
